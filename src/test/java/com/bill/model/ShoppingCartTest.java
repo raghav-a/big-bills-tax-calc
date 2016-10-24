@@ -22,15 +22,15 @@ public class ShoppingCartTest {
     @Test
     public void checkoutShouldGenerateReceiptForItemsAddedToShoppingCart() {
         final ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.add(Product.ofType(book).name("book").price( 15.95f).build(), 2);
+        shoppingCart.add(Product.ofType(book).name("book").price(15.95f).build(), 2);
         final Receipt receipt = shoppingCart.checkout();
         assertThat(receipt, notNullValue());
         StringWriter printer = new StringWriter();
         receipt.print(printer);
         assertThat(printer.toString(), is(
-            "2 book: 31.90\\n" +
-                "Sales Taxes : 0.00\\n" +
-                "Total : 31.90"));
+            "2 book: 31.90" + "\n" +
+            "Sales Taxes : 0.00" + "\n" +
+            "Total : 31.90"));
 
     }
 
