@@ -43,46 +43,49 @@ public class Product {
 
     public Float salesTaxPerItem() {
         final float value = (salesTaxPercentage * price()) / 100;
-        return roundOff(value);
+        return roundUp(value);
     }
 
     public Float salesTaxPercentage() {
         return salesTaxPercentage;
     }
 
-    private Float roundOff(double num) {
-        return Math.round(num * (20)) / 20.00f;
+
+    public static float roundUp(float x) {
+        return (float) (Math.ceil(x * 20) / 20);
     }
 
     public static final class Builder {
         private String name;
         private Float price;
         private Type type;
+
         private boolean isImported = false;
 
         private Builder(Type type) {
             this.type = type;
         }
 
+
         public Builder isImported() {
             this.isImported = true;
             return this;
         }
-
 
         public Builder name(String name) {
             this.name = name;
             return this;
         }
 
+
         public Builder price(Float price) {
             this.price = price;
             return this;
         }
-
-
         public Product build() {
             return new Product(name, type,  isImported, price);
         }
+
+
     }
 }

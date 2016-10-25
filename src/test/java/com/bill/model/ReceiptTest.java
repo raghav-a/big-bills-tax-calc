@@ -90,9 +90,9 @@ public class ReceiptTest {
             is("1 imported bottle of perfume: 32.19\n" +
                 "1 bottle of perfume: 20.89\n" +
                 "1 packet of headache pills: 9.75\n" +
-                "1 box of imported chocolates: 11.80\n" +
-                "Sales Taxes : 6.65\n" +
-                "Total : 74.63"));
+                "1 box of imported chocolates: 11.85\n" +
+                "Sales Taxes : 6.70\n" +
+                "Total : 74.68"));
     }
 
 
