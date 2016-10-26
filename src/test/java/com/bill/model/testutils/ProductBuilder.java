@@ -6,7 +6,7 @@ import com.bill.helpers.SalesTaxService;
 
 public final class ProductBuilder {
 
-    private static SalesTaxService salesTaxService = new SalesTaxService(new Configuration("settings.properties"));
+    private static SalesTaxService salesTaxService = new SalesTaxService(new Configuration("application.properties"));
 
 
     public static final class  Type {
