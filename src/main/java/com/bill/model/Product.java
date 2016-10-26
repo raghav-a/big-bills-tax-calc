@@ -1,32 +1,24 @@
 package com.bill.model;
 
+import com.bill.helpers.SalesTaxService;
+
 public class Product {
-    enum Type {
-        book(0.00f), medical(0.00f), food(0.00f), others(10.00f);
 
-        private Float salesTax;
-
-        Type(Float salesTax) {
-            this.salesTax = salesTax;
-        }
-
-    }
-
+    private final Boolean isImported;
     private final Float price;
-    private final Type type;
+    private final String type;
     private final String name;
+    private final Float salesTax;
+    private final Float costPrice;
 
-    private final Float salesTaxPercentage;
 
-    public Product(String name, Type type, Boolean isImported, Float price) {
+    public Product(String name, String type, Boolean isImported, Float price, SalesTaxService salesTaxService) {
+        this.isImported = isImported;
         this.price = price;
         this.type = type;
         this.name = name;
-        salesTaxPercentage = type.salesTax + (isImported ? 5.00f : 0.00f);
-    }
-
-    public static Builder ofType(Type type) {
-        return new Builder(type);
+        this.salesTax = salesTaxService.salesTaxFor(this);
+        this.costPrice = price() + salesTax();
     }
 
     public String name() {
@@ -38,54 +30,19 @@ public class Product {
     }
 
     public float costPrice() {
-            return price() + salesTaxPerItem();
+            return costPrice;
     }
 
-    public Float salesTaxPerItem() {
-        final float value = (salesTaxPercentage * price()) / 100;
-        return roundUp(value);
+    public Float salesTax() {
+       return salesTax;
     }
 
-    public Float salesTaxPercentage() {
-        return salesTaxPercentage;
+    public String type() {
+        return type;
     }
 
-
-    public static float roundUp(float x) {
-        return (float) (Math.ceil(x * 20) / 20);
+    public Boolean isImported() {
+        return isImported;
     }
 
-    public static final class Builder {
-        private String name;
-        private Float price;
-        private Type type;
-
-        private boolean isImported = false;
-
-        private Builder(Type type) {
-            this.type = type;
-        }
-
-
-        public Builder isImported() {
-            this.isImported = true;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-
-        public Builder price(Float price) {
-            this.price = price;
-            return this;
-        }
-        public Product build() {
-            return new Product(name, type,  isImported, price);
-        }
-
-
-    }
 }

@@ -1,6 +1,7 @@
 package com.bill.model;
 
-import com.bill.model.Product.Type;
+import com.bill.model.testutils.CartBuilder;
+import com.bill.model.testutils.ProductBuilder;
 import com.google.common.collect.ImmutableList;
 import org.junit.After;
 import org.junit.Test;
@@ -9,8 +10,9 @@ import java.io.StringWriter;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.bill.model.CartEntry.cartEntry;
-import static com.bill.model.Product.Type.*;
+import static com.bill.model.testutils.CartBuilder.cartEntry;
+import static com.bill.model.testutils.ProductBuilder.Type.*;
+import static com.bill.model.testutils.ProductBuilder.productOfType;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -27,21 +29,21 @@ public class ReceiptTest {
     @Test
     public void createReceiptWithCartEntries() {
         new Receipt(cartEntries(
-            cartEntry(Product.ofType(book).name("bookName").price(12.45f))
+            cartEntry(productOfType(book).name("bookName").price(12.45f))
                 .quantity(3),
-            cartEntry(Product.ofType(others).name("perfumeName").price(43.45f))
+            cartEntry(productOfType(others).name("perfumeName").price(43.45f))
                 .quantity(4))
         );
     }
 
     @Test
-    public void printReceiptForUsecaseOne() {
+    public void printReceiptForOneBook_OneMusicCd_AndOneChoclateBar() {
         new Receipt(cartEntries(
-            cartEntry(Product.ofType(book).name("book").price(12.49f))
+            cartEntry(productOfType(book).name("book").price(12.49f))
                 .quantity(1),
-            cartEntry(Product.ofType(others).name("music cd").price(14.99f))
+            cartEntry(productOfType(others).name("music cd").price(14.99f))
                 .quantity(1),
-            cartEntry(Product.ofType(Type.food).name("chocolate bar").price(.85f))
+            cartEntry(productOfType(food).name("chocolate bar").price(.85f))
                 .quantity(1)
         )).print(receiptPrinter);
 
@@ -55,11 +57,11 @@ public class ReceiptTest {
 
 
     @Test
-    public void printReceiptForUsecaseTwo() {
+    public void printReceiptForOneBoxImportedChocalte_AndOneImportedPerfume() {
         Receipt receipt = new Receipt(cartEntries(
-            cartEntry(Product.ofType(food).name("imported box of chocolates").price(10.0f).isImported())
+            cartEntry(productOfType(food).name("imported box of chocolates").price(10.0f).isImported())
                 .quantity(1),
-            cartEntry(Product.ofType(others).name("imported bottle of perfume").price(47.5f).isImported())
+            cartEntry(productOfType(others).name("imported bottle of perfume").price(47.5f).isImported())
                 .quantity(1)));
 
 
@@ -73,15 +75,15 @@ public class ReceiptTest {
     }
 
     @Test
-    public void printReceipt_usecase_three() {
+    public void printReceiptForOneImportedPerfume_OneDomesticPerfume_OnePacketOfPills_AndOneBoxImportedChocalte() {
         Receipt receipt = new Receipt(cartEntries(
-            cartEntry(Product.ofType(others).name("imported bottle of perfume").price(27.99f).isImported())
+            cartEntry(productOfType(others).name("imported bottle of perfume").price(27.99f).isImported())
                 .quantity(1),
-            cartEntry(Product.ofType(others).name("bottle of perfume").price(18.99f))
+            cartEntry(productOfType(others).name("bottle of perfume").price(18.99f))
                 .quantity(1),
-            cartEntry(Product.ofType(medical).name("packet of headache pills").price(9.75f))
+            cartEntry(productOfType(medical).name("packet of headache pills").price(9.75f))
                 .quantity(1),
-            cartEntry(Product.ofType(food).name("box of imported chocolates").price(11.25f).isImported())
+            cartEntry(productOfType(food).name("box of imported chocolates").price(11.25f).isImported())
                 .quantity(1))
         );
 
@@ -97,8 +99,8 @@ public class ReceiptTest {
 
 
 
-    private static ImmutableList<CartEntry> cartEntries(CartEntry.Builder... cartEntries) {
-        return ImmutableList.copyOf(Stream.of(cartEntries).map(CartEntry.Builder::build).collect(Collectors.toList()));
+    private static ImmutableList<CartEntry> cartEntries(CartBuilder... cartEntries) {
+        return ImmutableList.copyOf(Stream.of(cartEntries).map(CartBuilder::build).collect(Collectors.toList()));
     }
 
 }

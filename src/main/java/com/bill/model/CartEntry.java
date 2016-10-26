@@ -28,36 +28,8 @@ public class CartEntry {
 
 
     public Float totalSalesTax() {
-        return product.salesTaxPerItem() * quantity();
+        return product.salesTax() * quantity();
     }
 
-
-    public static Builder cartEntry(Product product) {
-        return new Builder(product);
-    }
-
-    public static Builder cartEntry(Product.Builder builder) {
-        return new Builder(builder.build());
-    }
-
-
-    public static final class Builder {
-        private final Product product;
-        private Integer quantity;
-
-        private Builder(Product product) {
-            this.product = product;
-        }
-
-
-        public Builder quantity(Integer quantity) {
-            this.quantity = quantity;
-            return this;
-        }
-
-        public CartEntry build() {
-            return new CartEntry(product, quantity);
-        }
-    }
 
 }

@@ -9,10 +9,7 @@ public class ShoppingCart {
     private List<CartEntry> cartEntries = new ArrayList<>();
 
     public void add(Product product, Integer quantity) {
-        cartEntries.add(CartEntry
-            .cartEntry(product)
-            .quantity(quantity)
-            .build());
+        cartEntries.add(new CartEntry(product,quantity));
     }
 
     public Receipt checkout() {

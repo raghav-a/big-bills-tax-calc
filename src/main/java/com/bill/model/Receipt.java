@@ -5,18 +5,22 @@ import com.google.common.collect.ImmutableList;
 import java.io.*;
 
 public class Receipt {
+    private final Double totalSalesTax;
+    private final Double totalAmount;
     private ImmutableList<CartEntry> cartEntries;
     private String salesTaxtemplate = "Sales Taxes : %.2f";
     private String totaPriceTemplate = "Total : %.2f";
 
     public Receipt(ImmutableList<CartEntry> cartEntries) {
         this.cartEntries = cartEntries;
+        this.totalSalesTax = totalSalesTax();
+        this.totalAmount = totalAmount();
     }
 
     public void print(Writer writer) {
         cartEntries.forEach(entry -> write(writer, entry.receiptLine() + "\n"));
-        write(writer, String.format(salesTaxtemplate, totalSalesTax()) + "\n");
-        write(writer, String.format(totaPriceTemplate, totalAmount()));
+        write(writer, String.format(salesTaxtemplate, totalSalesTax) + "\n");
+        write(writer, String.format(totaPriceTemplate, totalAmount));
 
 
     }
