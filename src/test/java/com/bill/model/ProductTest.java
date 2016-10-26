@@ -42,17 +42,4 @@ public class ProductTest {
         assertThat(shirt.costPrice(), CoreMatchers.is(27.50f));
     }
 
-    @Test
-    public void roundOffSalesTax() {
-        final Product shirt = productOfType(others).name("shirt").price(23.99f).build();
-        assertThat(shirt.salesTax(), CoreMatchers.is(2.40f));
-
-        final Product shirtTwo = productOfType(others).name("shirt").price(47.50f).isImported().build();
-        assertThat(shirtTwo.salesTax(), CoreMatchers.is(7.15f));
-
-
-        final Product perfume = productOfType(others).name("perfume").price(27.99f).isImported().build();
-        assertThat(perfume.salesTax(), CoreMatchers.is(4.20f));
-    }
-
 }
